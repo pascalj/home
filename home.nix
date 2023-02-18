@@ -22,13 +22,57 @@
   programs.home-manager.enable = true;
 
   home.packages = [
+    pkgs.bat
     pkgs.clang-tools
     pkgs.fd
     pkgs.htop
     pkgs.ripgrep
+    pkgs.lazygit
+    (pkgs.iosevka.override {
+      set = "pascal";
+      privateBuildPlan = ''
+        [buildPlans.iosevka-pascal]
+        family = "Iosevka Pascal"
+        spacing = "term"
+        serifs = "sans"
+        no-cv-ss = true
+        export-glyph-names = true
+
+          [buildPlans.iosevka-pascal.ligations]
+          inherits = "clike"
+
+        [buildPlans.iosevka-pascal.weights.regular]
+        shape = 400
+        menu = 400
+        css = 400
+
+        [buildPlans.iosevka-pascal.weights.bold]
+        shape = 700
+        menu = 700
+        css = 700
+
+        [buildPlans.iosevka-pascal.slopes.upright]
+        angle = 0
+        shape = "upright"
+        menu = "upright"
+        css = "normal"
+
+        [buildPlans.iosevka-pascal.slopes.italic]
+        angle = 9.4
+        shape = "italic"
+        menu = "italic"
+        css = "italic"
+      '';
+    })
   ];
 
+  fonts.fontconfig.enable = true;
   programs.jq.enable = true;
+  programs.rofi = {
+    enable = true;
+    plugins = [ pkgs.rofi-calc ];
+    theme = "${config.xdg.configHome}/nixpkgs/home/rofi/nord.rasi";
+  };
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
