@@ -14,15 +14,6 @@ LC_NUMERIC="en_US.UTF-8"
 LC_TIME="en_US.UTF-8"
 
 # aliases and functions
-alias vim="nvim"
-alias jenny="mosh pascalj.de"
-alias irc="rifle https://irc.pascalj.de"
-alias st="git status"
-alias todo="vim ~/Dropbox/TaskPaper/Allgemein.taskpaper"
-alias diss="vim ~/Dropbox/Uni/diss.md"
-alias studis="vim ~/Dropbox/TaskPaper/Studenten.taskpaper"
-alias ls='ls --color=auto'
-alias lg='lazygit' 
 
 iterm_title() { echo -ne "\033];$@\007" }
 

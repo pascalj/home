@@ -18,6 +18,13 @@
     path = "${config.xdg.dataHome}/zsh/zsh_history";
   };
 
+  shellAliases = {
+    vim = "nvim";
+    st = "git status";
+    ls = "ls --color=auto";
+    lg = "lazygit";
+  };
+
   initExtra = lib.fileContents ./zsh/zshrc;
 
       plugins = [

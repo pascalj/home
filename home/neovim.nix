@@ -56,6 +56,7 @@ in {
             markdown
             c
             cpp
+            latex
           ]
         ))
 
