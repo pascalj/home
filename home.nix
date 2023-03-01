@@ -28,7 +28,6 @@
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
-    pkgs.python310Packages.timetagger
     (pkgs.iosevka.override {
       set = "pascal";
       privateBuildPlan = ''
