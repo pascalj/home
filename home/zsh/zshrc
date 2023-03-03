@@ -131,3 +131,6 @@ bindkey "^L" fast_clear
 export FZF_DEFAULT_COMMAND='fd --type f'
 
 [[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+
+# Kitty/alacritty
+export TERM=xterm-256color

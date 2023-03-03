@@ -57,6 +57,7 @@ in {
             c
             cpp
             latex
+            r
           ]
         ))
 

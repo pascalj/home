@@ -21,6 +21,7 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+
   home.packages = [
     pkgs.bat
     pkgs.clang-tools
@@ -28,6 +29,7 @@
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
+    (pkgs.rWrapper.override{ packages = with pkgs.rPackages; [ tidyverse here ]; })
     pkgs.python310Packages.timetagger
     (pkgs.iosevka.override {
       set = "pascal";
