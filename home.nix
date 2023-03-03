@@ -30,7 +30,6 @@
     pkgs.ripgrep
     pkgs.lazygit
     (pkgs.rWrapper.override{ packages = with pkgs.rPackages; [ tidyverse here ]; })
-    pkgs.python310Packages.timetagger
     (pkgs.iosevka.override {
       set = "pascal";
       privateBuildPlan = ''
