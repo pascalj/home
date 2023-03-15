@@ -134,3 +134,5 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 
 # Kitty/alacritty
 export TERM=xterm-256color
+
+eval "$(direnv hook zsh)"

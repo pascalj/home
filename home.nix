@@ -21,6 +21,9 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
 
   home.packages = [
     pkgs.bat
@@ -29,7 +32,9 @@
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
-    (pkgs.rWrapper.override{ packages = with pkgs.rPackages; [ tidyverse here ]; })
+    (pkgs.rWrapper.override { packages = with pkgs.rPackages; [
+      tidyverse here tikzDevice gridExtra
+    ]; })
     pkgs.python310Packages.timetagger
     (pkgs.iosevka.override {
       set = "pascal";
