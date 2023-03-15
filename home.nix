@@ -32,10 +32,7 @@
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
-    (pkgs.rWrapper.override { packages = with pkgs.rPackages; [
-      tidyverse here tikzDevice gridExtra
-    ]; })
-    pkgs.python310Packages.timetagger
+    (pkgs.rWrapper.override{ packages = with pkgs.rPackages; [ tidyverse here tikzDevice ]; })
     (pkgs.iosevka.override {
       set = "pascal";
       privateBuildPlan = ''
