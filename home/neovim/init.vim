@@ -134,6 +134,15 @@ vim.keymap.set("n", "Q", "<nop>")
 
 local bufopts = { noremap=true, silent=true }
 local builtin = require('telescope.builtin')
+local telescope = require('telescope')
+telescope.setup({
+    extensions = {
+        heading = {
+            treesitter = true,
+        },
+    },
+})
+telescope.load_extension('heading')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, bufopts)
 vim.keymap.set('n', '<C-P>', builtin.git_files, bufopts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, bufopts)
@@ -142,6 +151,7 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, bufopts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, bufopts)
 vim.keymap.set('n', '<leader>fi', builtin.lsp_implementations, bufopts)
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, bufopts)
+vim.keymap.set('n', '<leader>k', '<Cmd>Telescope heading<CR>', bufopts)
 vim.keymap.set('n', '<leader>h', vim.cmd.ClangdSwitchSourceHeader, bufopts)
 
 -- Use an on_attach function to only map the following keys
