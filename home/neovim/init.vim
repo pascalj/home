@@ -110,6 +110,11 @@ set termguicolors
 
 syntax on
 
+augroup CustomHighlight
+    autocmd!
+    autocmd ColorScheme moonfly highlight Normal guifg=#ffffff
+    autocmd ColorScheme moonfly highlight MoonflyWhite guifg=#ffffff
+augroup END
 colorscheme moonfly
 
 " lua part - gradually migrating...
@@ -168,6 +173,7 @@ local on_attach = function(client, bufnr)
 
 end
 
+require("nvim-autopairs").setup {check_ts = true}
 require'lspconfig'.clangd.setup{on_attach = on_attach}
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -178,5 +184,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
 }
+-- require'lspconfig'.ltex.setup{}
+
 require('neogen').setup {}
 EOF
