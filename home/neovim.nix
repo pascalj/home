@@ -49,6 +49,7 @@ in {
       minimap-vim
       nvim-lspconfig
       telescope-nvim
+      nvim-autopairs
       (nvim-treesitter.withPlugins (
           plugins: with plugins; [
             nix

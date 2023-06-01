@@ -32,7 +32,7 @@
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
-    (pkgs.rWrapper.override{ packages = with pkgs.rPackages; [ tidyverse here tikzDevice ]; })
+    pkgs.zulip-term
     (pkgs.iosevka.override {
       set = "pascal";
       privateBuildPlan = ''
