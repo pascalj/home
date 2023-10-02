@@ -42,50 +42,51 @@ let
       hash = "sha256-y/GYH4FYRGTkl9eTtA5mO1XLvFGFCsNLoUuYLl+EAt4=";
     };
   };
-    configuration = pkgs.vimUtils.buildVimPluginFrom2Nix {
-      pname = "configuration";
-      version = "v1.0.0";
-      src = ./neovim;
-    };
-in {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    withRuby = false;
-    withNodeJs = false;
+  configuration = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "configuration";
+    version = "v1.0.0";
+    src = ./neovim;
+  };
+in
+{
+  enable = true;
+  viAlias = true;
+  vimAlias = true;
+  withRuby = false;
+  withNodeJs = false;
 
-    extraConfig = lib.fileContents ./neovim/init.vim;
+  extraConfig = lib.fileContents ./neovim/init.vim;
 
-    plugins = with pkgs.vimPlugins; [
-      vim-nix
-      vim-airline
-      vim-sleuth
-      vim-commentary
-      vim-dispatch
-      vim-fugitive
-      vim-localvimrc
-      vim-surround
-      neogen
-      minimap-vim
-      nvim-lspconfig
-      telescope-nvim
-      nvim-autopairs
-      telescope-heading
-      (nvim-treesitter.withPlugins (
-          plugins: with plugins; [
-            c
-            cpp
-            latex
-            markdown
-            nix
-            python
-            r
-          ]
-        ))
+  plugins = with pkgs.vimPlugins; [
+    vim-nix
+    vim-airline
+    vim-sleuth
+    vim-commentary
+    vim-dispatch
+    vim-fugitive
+    vim-localvimrc
+    vim-surround
+    neogen
+    minimap-vim
+    nvim-lspconfig
+    telescope-nvim
+    nvim-autopairs
+    telescope-heading
+    (nvim-treesitter.withPlugins (
+      plugins: with plugins; [
+        c
+        cpp
+        latex
+        markdown
+        nix
+        python
+        r
+      ]
+    ))
 
-      moonfly
-      github-nvim-theme
-      configuration
-    ];
-  }
+    moonfly
+    github-nvim-theme
+    configuration
+  ];
+}
 

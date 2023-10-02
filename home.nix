@@ -1,13 +1,5 @@
 { config, pkgs, lib, ... }:
-
-
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "pascalj";
-  home.homeDirectory = "/home/pascalj";
-
-
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -26,50 +18,13 @@
 
   home.packages = [
     pkgs.bat
-    pkgs.clang-tools
     pkgs.fd
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
-    pkgs.timewarrior
     pkgs.watson
-    pkgs.zulip-term
-    (pkgs.iosevka.override {
-      set = "pascal";
-      privateBuildPlan = ''
-        [buildPlans.iosevka-pascal]
-        family = "Iosevka Pascal"
-        spacing = "term"
-        serifs = "sans"
-        no-cv-ss = true
-        export-glyph-names = true
-
-          [buildPlans.iosevka-pascal.ligations]
-          inherits = "clike"
-
-        [buildPlans.iosevka-pascal.weights.regular]
-        shape = 400
-        menu = 400
-        css = 400
-
-        [buildPlans.iosevka-pascal.weights.bold]
-        shape = 700
-        menu = 700
-        css = 700
-
-        [buildPlans.iosevka-pascal.slopes.upright]
-        angle = 0
-        shape = "upright"
-        menu = "upright"
-        css = "normal"
-
-        [buildPlans.iosevka-pascal.slopes.italic]
-        angle = 9.4
-        shape = "italic"
-        menu = "italic"
-        css = "italic"
-      '';
-    })
+    pkgs.iosevka
+    pkgs.tree
   ];
 
   fonts.fontconfig.enable = true;
@@ -103,5 +58,4 @@
   programs.zsh = import ./home/zsh.nix {
     inherit config lib pkgs;
   };
-
 }
