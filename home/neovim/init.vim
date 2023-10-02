@@ -12,6 +12,7 @@ let g:moonflyWinSeparator = 2
 let g:netrw_banner = 0
 let g:netrw_list_hide='.*\.swp$,*/tmp/*,*.so,*.swp,^__*,*.zip,*.git,^\.\.\=/\=$,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_sort_sequence = '[\/]$,*,\.o$,\.obj$,\.info$,\.swp$,\.bak$,\~$' 
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 set directory=$HOME/.vim/swapfiles//
 set fillchars="horiz:━,horizup:┻,horizdown:┳,vert:┃,vertleft:┨,vertright:┣,verthoriz:╋"
 set foldexpr=nvim_treesitter#foldexpr()
@@ -185,6 +186,7 @@ end
 
 require("nvim-autopairs").setup {check_ts = true}
 require'lspconfig'.clangd.setup{on_attach = on_attach}
+require'lspconfig'.smarty_ls.setup{on_attach = on_attach}
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,

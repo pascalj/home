@@ -11,17 +11,16 @@ let
       sha256 = "sha256-2/wENDHSLSSGwrnFqF2c54rMYbCGv47y6Geu4PW0grI=";
     };
   };
-  colors-pencil = pkgs.vimUtils.buildVimPlugin {
-    pname = "colors-pencil";
+  github-nvim-theme = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "github-nvim-theme";
     version = "1.0";
     src = pkgs.fetchFromGitHub {
-      owner = "preservim";
-      repo = "vim-colors-pencil";
-      rev = "1101118fa3e3038568541e9a67511513aac5d19b";
-      sha256 = "sha256-l/v5wXs8ZC63OmnI1FcvEAvWJWkaRoLa9dlL1NdX5XY=";
+      owner = "projekt0n";
+      repo = "github-nvim-theme";
+      rev = "c8b55752294b9e83bd544f5ebf4ba485aec7e3c7";
+      hash = "sha256-CmIqpwG9H03ndxh8wT7d1BaDKLC+j00JcInkwNfaR2U=";
     };
   };
-
 
   neogen = pkgs.vimUtils.buildVimPlugin {
     pname = "neogen";
@@ -65,6 +64,7 @@ in {
       vim-dispatch
       vim-fugitive
       vim-localvimrc
+      vim-surround
       neogen
       minimap-vim
       nvim-lspconfig
@@ -73,18 +73,18 @@ in {
       telescope-heading
       (nvim-treesitter.withPlugins (
           plugins: with plugins; [
-            nix
-            python
-            markdown
             c
             cpp
             latex
+            markdown
+            nix
+            python
             r
           ]
         ))
 
       moonfly
-      colors-pencil
+      github-nvim-theme
       configuration
     ];
   }
