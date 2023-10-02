@@ -13,6 +13,7 @@
     let
       stateVersion = "23.05";
       system = "x86_64-linux";
+      # 'home-manager switch' will look for <username>@<host> and <username>
       hosts = [
         { username = "pascalj"; hostname = "carol"; }
         { username = "pascal"; hostname = "GS"; }
@@ -20,6 +21,7 @@
 
       pkgs = nixpkgs.legacyPackages.${system};
       lib = pkgs.lib;
+      # Small wrapper to have a ./<hostname>.nix file
       mkHome = { username, hostname }: {
         "${username}@${hostname}" = homeManager.lib.homeManagerConfiguration {
           inherit pkgs;

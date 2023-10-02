@@ -4,8 +4,7 @@ set shortmess=a
 
 " Settings
 let g:airline_powerline_fonts = 1
-let g:airline_theme='moonfly'
-let g:goyo_width = 130
+let g:airline_theme='catppuccin'
 let g:localvimrc_ask=0
 let g:localvimrc_sandbox=0
 let g:moonflyWinSeparator = 2
@@ -29,7 +28,6 @@ nmap _ :Hexplore<CR>
 map <Leader>n :noh<CR>
 map <Leader>m :MinimapToggle<CR>
 map <Leader>j :Make!<CR>
-map <Leader>d :Neogen<CR>
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
@@ -116,7 +114,6 @@ augroup CustomHighlight
     autocmd ColorScheme moonfly highlight Normal guifg=#ffffff
     autocmd ColorScheme moonfly highlight MoonflyWhite guifg=#ffffff
 augroup END
-colorscheme moonfly
 
 " lua part - gradually migrating...
 lua << EOF
@@ -155,11 +152,17 @@ vim.keymap.set('n', '<leader>fr', builtin.lsp_references, bufopts)
 vim.keymap.set('n', '<leader>k', '<Cmd>Telescope heading<CR>', bufopts)
 vim.keymap.set('n', '<leader>h', vim.cmd.ClangdSwitchSourceHeader, bufopts)
 
+local navic = require("nvim-navic")
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -199,4 +202,37 @@ require'nvim-treesitter.configs'.setup {
 -- require'lspconfig'.ltex.setup{}
 
 require('neogen').setup {}
+
+
+require("catppuccin").setup({
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
+    transparent_background = true, -- disables setting the background color.
+    show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+    term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+    no_italic = false, -- Force no italic
+    no_bold = false, -- Force no bold
+    no_underline = false, -- Force no underline
+    styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+        comments = { "italic" }, -- Change the style of comments
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+    },
+    color_overrides = {
+
+        },
+    integrations = {
+        treesitter = true,
+    },
+})
+vim.cmd.colorscheme "catppuccin"
+vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 EOF

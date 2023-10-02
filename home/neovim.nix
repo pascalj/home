@@ -11,7 +11,7 @@ let
       sha256 = "sha256-2/wENDHSLSSGwrnFqF2c54rMYbCGv47y6Geu4PW0grI=";
     };
   };
-  github-nvim-theme = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  github-nvim-theme = pkgs.vimUtils.buildVimPlugin {
     pname = "github-nvim-theme";
     version = "1.0";
     src = pkgs.fetchFromGitHub {
@@ -32,7 +32,7 @@ let
       sha256 = "sha256-m9jiH3DkutORUVMDJ7UoS8bvZ8TBzDu01IRYZkIGibs=";
     };
   };
-  telescope-heading = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  telescope-heading = pkgs.vimUtils.buildVimPlugin {
     pname = "telescope-heading";
     version = "0.7.0";
     src = pkgs.fetchFromGitHub {
@@ -42,7 +42,7 @@ let
       hash = "sha256-y/GYH4FYRGTkl9eTtA5mO1XLvFGFCsNLoUuYLl+EAt4=";
     };
   };
-  configuration = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  configuration = pkgs.vimUtils.buildVimPlugin {
     pname = "configuration";
     version = "v1.0.0";
     src = ./neovim;
@@ -58,20 +58,22 @@ in
   extraConfig = lib.fileContents ./neovim/init.vim;
 
   plugins = with pkgs.vimPlugins; [
-    vim-nix
+    catppuccin-nvim
+    minimap-vim
+    neogen
+    nvim-autopairs
+    nvim-lspconfig
+    nvim-navic
+    telescope-heading
+    telescope-nvim
     vim-airline
-    vim-sleuth
     vim-commentary
     vim-dispatch
     vim-fugitive
     vim-localvimrc
+    vim-nix
+    vim-sleuth
     vim-surround
-    neogen
-    minimap-vim
-    nvim-lspconfig
-    telescope-nvim
-    nvim-autopairs
-    telescope-heading
     (nvim-treesitter.withPlugins (
       plugins: with plugins; [
         c
