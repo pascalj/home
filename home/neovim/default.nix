@@ -1,16 +1,6 @@
 { pkgs, lib, ... }:
 
 let
-  moonfly = pkgs.vimUtils.buildVimPlugin {
-    pname = "moonfly";
-    version = "1.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "bluz71";
-      repo = "vim-moonfly-colors";
-      rev = "5fc39cbc04de7395db942758a546c7f87bfcb571";
-      sha256 = "sha256-2/wENDHSLSSGwrnFqF2c54rMYbCGv47y6Geu4PW0grI=";
-    };
-  };
   github-nvim-theme = pkgs.vimUtils.buildVimPlugin {
     pname = "github-nvim-theme";
     version = "1.0";
@@ -19,17 +9,6 @@ let
       repo = "github-nvim-theme";
       rev = "c8b55752294b9e83bd544f5ebf4ba485aec7e3c7";
       hash = "sha256-CmIqpwG9H03ndxh8wT7d1BaDKLC+j00JcInkwNfaR2U=";
-    };
-  };
-
-  neogen = pkgs.vimUtils.buildVimPlugin {
-    pname = "neogen";
-    version = "2.13.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "danymat";
-      repo = "neogen";
-      rev = "fbc3952024d2c0d57b92a3802e9e29c789abcd18";
-      sha256 = "sha256-m9jiH3DkutORUVMDJ7UoS8bvZ8TBzDu01IRYZkIGibs=";
     };
   };
   telescope-heading = pkgs.vimUtils.buildVimPlugin {
@@ -45,7 +24,7 @@ let
   configuration = pkgs.vimUtils.buildVimPlugin {
     pname = "configuration";
     version = "v1.0.0";
-    src = ./neovim;
+    src = ../neovim;
   };
 in
 {
@@ -55,18 +34,17 @@ in
   withRuby = false;
   withNodeJs = false;
 
-  extraConfig = lib.fileContents ./neovim/init.vim;
+  extraConfig = lib.fileContents ./init.vim;
 
   plugins = with pkgs.vimPlugins; [
     catppuccin-nvim
+    lualine-nvim
     minimap-vim
-    neogen
     nvim-autopairs
     nvim-lspconfig
     nvim-navic
     telescope-heading
     telescope-nvim
-    vim-airline
     vim-commentary
     vim-dispatch
     vim-fugitive
@@ -86,7 +64,6 @@ in
       ]
     ))
 
-    moonfly
     github-nvim-theme
     configuration
   ];

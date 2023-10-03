@@ -3,11 +3,8 @@ set shortmess=a
 " ----
 
 " Settings
-let g:airline_powerline_fonts = 1
-let g:airline_theme='catppuccin'
 let g:localvimrc_ask=0
 let g:localvimrc_sandbox=0
-let g:moonflyWinSeparator = 2
 let g:netrw_banner = 0
 let g:netrw_list_hide='.*\.swp$,*/tmp/*,*.so,*.swp,^__*,*.zip,*.git,^\.\.\=/\=$,\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_sort_sequence = '[\/]$,*,\.o$,\.obj$,\.info$,\.swp$,\.bak$,\~$' 
@@ -49,18 +46,6 @@ vmap <S-TAB> <gv
 vmap <TAB> >gv
 nmap <CR> o<Esc>
 
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--disabled', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  let spec = fzf#vim#with_preview(spec, 'right', 'ctrl-/')
-  call fzf#vim#grep(initial_command, 1, spec, a:fullscreen)
-endfunction
-
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-
-
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
   " Enable file type detection
@@ -71,7 +56,6 @@ if has("autocmd")
   autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
    
-  autocmd FileType cpp let g:ale_sign_column_always = 1
   set signcolumn=yes
    
   " Treat .rss files as XML
@@ -109,12 +93,6 @@ set termguicolors
 
 syntax on
 
-augroup CustomHighlight
-    autocmd!
-    autocmd ColorScheme moonfly highlight Normal guifg=#ffffff
-    autocmd ColorScheme moonfly highlight MoonflyWhite guifg=#ffffff
-augroup END
-
 " lua part - gradually migrating...
 lua << EOF
 
@@ -141,14 +119,19 @@ telescope.setup({
     },
 })
 telescope.load_extension('heading')
+-- Finding
 vim.keymap.set('n', '<leader>ff', builtin.find_files, bufopts)
 vim.keymap.set('n', '<C-P>', builtin.git_files, bufopts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, bufopts)
+vim.keymap.set('n', '<leader>fc', builtin.lsp_incoming_calls, bufopts)
+vim.keymap.set('n', '<leader>fC', builtin.lsp_outgoing_calls, bufopts)
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, bufopts)
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, bufopts)
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, bufopts)
 vim.keymap.set('n', '<leader>fi', builtin.lsp_implementations, bufopts)
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, bufopts)
+vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, bufopts)
+vim.keymap.set('n', '<leader>fS', builtin.lsp_dynamic_workspace_symbols, bufopts)
 vim.keymap.set('n', '<leader>k', '<Cmd>Telescope heading<CR>', bufopts)
 vim.keymap.set('n', '<leader>h', vim.cmd.ClangdSwitchSourceHeader, bufopts)
 
@@ -167,24 +150,21 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  -- Finding/diagnostics
+  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
-  vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, bufopts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
   vim.keymap.set('n', 'gD', builtin.lsp_type_definitions, bufopts)
   vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
-  vim.keymap.set('n', '<leader>wl', function()
-  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
 
+  -- Mutation
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, bufopts)
 end
 
 require("nvim-autopairs").setup {check_ts = true}
@@ -199,11 +179,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
 }
--- require'lspconfig'.ltex.setup{}
-
-require('neogen').setup {}
-
-
+-- Colortheme
 require("catppuccin").setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
     transparent_background = true, -- disables setting the background color.
@@ -226,13 +202,30 @@ require("catppuccin").setup({
         types = {},
         operators = {},
     },
-    color_overrides = {
-
-        },
     integrations = {
         treesitter = true,
+        navic = {
+            enabled = true,
+            custom_bg = "NONE", -- "lualine" will set background to mantle
+        },
     },
 })
+require('lualine').setup {
+    options = {
+        theme = "catppuccin"
+    },
+    sections = {
+        lualine_c = {
+            {
+                "navic",
+                color_correction = "static",
+                navic_opts = {
+                    highlight = true,
+                    separator = " -> ",
+                }
+            }
+        }
+    }
+}
 vim.cmd.colorscheme "catppuccin"
-vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 EOF

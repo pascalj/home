@@ -51,11 +51,11 @@
     diff-so-fancy.enable = true;
   };
 
-  programs.neovim = import ./home/neovim.nix {
+  programs.neovim = import ./home/neovim {
     inherit pkgs lib;
   };
 
-  programs.zsh = import ./home/zsh.nix {
+  programs.zsh = import ./home/zsh {
     inherit config lib pkgs;
   };
 }

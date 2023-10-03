@@ -26,7 +26,7 @@
     nd = "nix develop --command zsh";
   };
 
-  initExtra = lib.fileContents ./zsh/zshrc;
+  initExtra = lib.fileContents ./zshrc;
 
   plugins = [
     {
