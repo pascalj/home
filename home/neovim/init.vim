@@ -48,31 +48,31 @@ nmap <CR> o<Esc>
 
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
-  " Enable file type detection
-  filetype on
-  filetype plugin indent on
-   
-  " Syntax of these languages is fussy over tabs Vs spaces
-  autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-   
-  set signcolumn=yes
-   
-  " Treat .rss files as XML
-  autocmd BufNewFile,BufRead *.rss setfiletype xml
+    " Enable file type detection
+    filetype on
+    filetype plugin indent on
 
-  " Focus
-  autocmd! User GoyoEnter Limelight
-  autocmd! User GoyoLeave Limelight!
+    " Syntax of these languages is fussy over tabs Vs spaces
+    autocmd FileType make setlocal ts=8 sts=8 sw=8 noexpandtab
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
-  " :help last-position-jump
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+    set signcolumn=yes
+
+    " Treat .rss files as XML
+    autocmd BufNewFile,BufRead *.rss setfiletype xml
+
+    " Focus
+    autocmd! User GoyoEnter Limelight
+    autocmd! User GoyoLeave Limelight!
+
+    " :help last-position-jump
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
 
 hi clear
 
 if exists("syntax_on")
-  syntax reset
+    syntax reset
 endif
 
 " highlight only current buffer/window
@@ -112,11 +112,11 @@ local bufopts = { noremap=true, silent=true }
 local builtin = require('telescope.builtin')
 local telescope = require('telescope')
 telescope.setup({
-    extensions = {
-        heading = {
-            treesitter = true,
-        },
+extensions = {
+    heading = {
+        treesitter = true,
     },
+},
 })
 telescope.load_extension('heading')
 -- Finding
@@ -140,47 +140,47 @@ local navic = require("nvim-navic")
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- Enable completion triggered by <c-x><c-o>
+vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  if client.server_capabilities.documentSymbolProvider then
+if client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
-  end
+    end
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  -- Finding/diagnostics
-  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', 'gD', builtin.lsp_type_definitions, bufopts)
-  vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    -- Finding/diagnostics
+    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', 'gD', builtin.lsp_type_definitions, bufopts)
+    vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
+    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
+    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
 
-  -- Mutation
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, bufopts)
-end
+    -- Mutation
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, bufopts)
+    end
 
-require("nvim-autopairs").setup {check_ts = true}
-require'lspconfig'.clangd.setup{on_attach = on_attach}
-require'lspconfig'.smarty_ls.setup{on_attach = on_attach}
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  incremental_selection = {
-    enable = true
-  },
-}
--- Colortheme
-require("catppuccin").setup({
+    require("nvim-autopairs").setup {check_ts = true}
+    require'lspconfig'.clangd.setup{on_attach = on_attach}
+    require'lspconfig'.smarty_ls.setup{on_attach = on_attach}
+    require'nvim-treesitter.configs'.setup {
+        highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+        },
+        incremental_selection = {
+            enable = true
+        },
+    }
+    -- Colortheme
+    require("catppuccin").setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
     transparent_background = true, -- disables setting the background color.
     show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
@@ -189,18 +189,18 @@ require("catppuccin").setup({
     no_bold = false, -- Force no bold
     no_underline = false, -- Force no underline
     styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-        comments = { "italic" }, -- Change the style of comments
-        conditionals = { "italic" },
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
+    comments = { "italic" }, -- Change the style of comments
+    conditionals = { "italic" },
+    loops = {},
+    functions = {},
+    keywords = {},
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = {},
+    properties = {},
+    types = {},
+    operators = {},
     },
     integrations = {
         treesitter = true,
@@ -209,23 +209,26 @@ require("catppuccin").setup({
             custom_bg = "NONE", -- "lualine" will set background to mantle
         },
     },
-})
-require('lualine').setup {
-    options = {
-        theme = "catppuccin"
-    },
-    sections = {
-        lualine_c = {
-            {
-                "navic",
-                color_correction = "static",
-                navic_opts = {
-                    highlight = true,
-                    separator = " -> ",
+    })
+    require('lualine').setup {
+        options = {
+            theme = "catppuccin"
+        },
+        sections = {
+            lualine_c = {
+                {
+                        'filename'
+                },
+                {
+                        "navic",
+                        color_correction = "static",
+                        navic_opts = {
+                            highlight = true,
+                            separator = " -> ",
+                        }
+                        }
                 }
-            }
-        }
+            },
     }
-}
-vim.cmd.colorscheme "catppuccin"
-EOF
+    vim.cmd.colorscheme "catppuccin"
+    EOF
