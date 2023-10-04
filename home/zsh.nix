@@ -24,6 +24,7 @@
     ls = "ls --color=auto";
     lg = "lazygit";
     nd = "nix develop --command zsh";
+    wa = "watson";
   };
 
   initExtra = lib.fileContents ./zsh/zshrc;
