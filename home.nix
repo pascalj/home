@@ -1,13 +1,5 @@
 { config, pkgs, lib, ... }:
-
-
 {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "pascalj";
-  home.homeDirectory = "/home/pascalj";
-
-
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -16,7 +8,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -24,51 +16,15 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-
   home.packages = [
     pkgs.bat
-    pkgs.clang-tools
     pkgs.fd
     pkgs.htop
     pkgs.ripgrep
     pkgs.lazygit
-    pkgs.zulip-term
-    (pkgs.iosevka.override {
-      set = "pascal";
-      privateBuildPlan = ''
-        [buildPlans.iosevka-pascal]
-        family = "Iosevka Pascal"
-        spacing = "term"
-        serifs = "sans"
-        no-cv-ss = true
-        export-glyph-names = true
-
-          [buildPlans.iosevka-pascal.ligations]
-          inherits = "clike"
-
-        [buildPlans.iosevka-pascal.weights.regular]
-        shape = 400
-        menu = 400
-        css = 400
-
-        [buildPlans.iosevka-pascal.weights.bold]
-        shape = 700
-        menu = 700
-        css = 700
-
-        [buildPlans.iosevka-pascal.slopes.upright]
-        angle = 0
-        shape = "upright"
-        menu = "upright"
-        css = "normal"
-
-        [buildPlans.iosevka-pascal.slopes.italic]
-        angle = 9.4
-        shape = "italic"
-        menu = "italic"
-        css = "italic"
-      '';
-    })
+    pkgs.watson
+    pkgs.iosevka
+    pkgs.tree
   ];
 
   fonts.fontconfig.enable = true;
@@ -88,14 +44,18 @@
     userName = "Pascal Jungblut";
     userEmail = "mail@pascalj.de";
     ignores = [ ".lvimrc" ];
+    aliases = {
+      st = "status";
+      co = "checkout";
+    };
+    diff-so-fancy.enable = true;
   };
 
-  programs.neovim = import ./home/neovim.nix {
+  programs.neovim = import ./home/neovim {
     inherit pkgs lib;
   };
 
-  programs.zsh = import ./home/zsh.nix {
+  programs.zsh = import ./home/zsh {
     inherit config lib pkgs;
   };
-
 }
