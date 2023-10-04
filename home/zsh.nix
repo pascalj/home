@@ -25,6 +25,10 @@
     lg = "lazygit";
     nd = "nix develop --command zsh";
     wa = "watson";
+
+    # gs
+    bios = "cmake --build /home/pascal/src/appsweep/ios/cmake-build-debug --target appsweep-ios";
+    rlit = "cmake --build /home/pascal/src/appsweep/ios/cmake-build-debug --target run_lit";
   };
 
   initExtra = lib.fileContents ./zsh/zshrc;

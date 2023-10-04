@@ -65,8 +65,7 @@ in {
       vim-dispatch
       vim-fugitive
       vim-localvimrc
-      neogen
-      minimap-vim
+      goto-preview
       nvim-lspconfig
       telescope-nvim
       nvim-autopairs
@@ -82,7 +81,6 @@ in {
             r
           ]
         ))
-
       moonfly
       colors-pencil
       configuration

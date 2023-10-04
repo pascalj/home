@@ -28,13 +28,14 @@ nmap _ :Hexplore<CR>
 map <Leader>n :noh<CR>
 map <Leader>m :MinimapToggle<CR>
 map <Leader>j :Make!<CR>
-map <Leader>d :Neogen<CR>
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 map <C-b> gqip<cr>
+nnoremap <C-Left> gt
+nnoremap <C-Right> gT
 
 command! -bang GFilesExact call fzf#vim#gitfiles("",  {'options': ['--layout=reverse', '--info=inline']}, 0)
 
@@ -117,6 +118,7 @@ augroup CustomHighlight
 augroup END
 colorscheme moonfly
 
+
 " lua part - gradually migrating...
 lua << EOF
 
@@ -141,8 +143,21 @@ telescope.setup({
             treesitter = true,
         },
     },
+    pickers = {
+      treesitter = {
+        ignore_symbols = "var"
+      },
+    },
 })
+
+function createSplitWithHeader(bufopts)
+  vim.cmd('vsplit')
+  vim.cmd.ClangdSwitchSourceHeader(bufopts)
+end
+
 telescope.load_extension('heading')
+require('goto-preview').setup {default_mappings = true}
+
 vim.keymap.set('n', '<leader>ff', builtin.find_files, bufopts)
 vim.keymap.set('n', '<C-P>', builtin.git_files, bufopts)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, bufopts)
@@ -153,6 +168,7 @@ vim.keymap.set('n', '<leader>fi', builtin.lsp_implementations, bufopts)
 vim.keymap.set('n', '<leader>fr', builtin.lsp_references, bufopts)
 vim.keymap.set('n', '<leader>k', '<Cmd>Telescope heading<CR>', bufopts)
 vim.keymap.set('n', '<leader>h', vim.cmd.ClangdSwitchSourceHeader, bufopts)
+vim.keymap.set('n', '<leader>H', createSplitWithHeader, bufopts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -175,6 +191,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
   vim.keymap.set('n', 'gD', builtin.lsp_type_definitions, bufopts)
   vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
+  vim.keymap.set("n", "gp", "<cmd>lua require('goto-preview').goto_preview_definition()<CR>", bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', 'gr', builtin.lsp_references, bufopts)
   vim.keymap.set('n', '<leader>wl', function()
@@ -194,7 +211,4 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   },
 }
--- require'lspconfig'.ltex.setup{}
-
-require('neogen').setup {}
 EOF
