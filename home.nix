@@ -32,7 +32,7 @@
   programs.rofi = {
     enable = true;
     plugins = [ pkgs.rofi-calc ];
-    theme = "${config.xdg.configHome}/nixpkgs/home/rofi/nord.rasi";
+    theme = ./home/rofi/nord.rasi;
   };
   programs.fzf = {
     enable = true;
