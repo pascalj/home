@@ -58,4 +58,7 @@
   programs.zsh = import ./home/zsh {
     inherit config lib pkgs;
   };
+
+
+  services.ssh-agent.enable = true;
 }
