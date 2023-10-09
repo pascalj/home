@@ -16,7 +16,7 @@
       # 'home-manager switch' will look for <username>@<host> and <username>
       hosts = [
         { username = "pascalj"; hostname = "carol"; }
-        { username = "pascal"; hostname = "GS"; }
+        { username = "pascal"; hostname = "GS-3KXV8Y3"; }
       ];
 
       pkgs = nixpkgs.legacyPackages.${system};
