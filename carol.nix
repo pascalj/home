@@ -2,6 +2,6 @@
 
 {
   home.packages = [
-    pkgs.clang-tools
+    pkgs.clang-tools_16
   ];
 }
