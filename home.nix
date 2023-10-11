@@ -16,29 +16,24 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  home.packages = [
-    pkgs.bat
-    pkgs.fd
-    pkgs.htop
-    pkgs.ripgrep
-    pkgs.lazygit
-    pkgs.watson
-    pkgs.iosevka
-    pkgs.tree
+  home.packages = with pkgs; [
+    bat
+    fd
+    htop
+    ripgrep
+    lazygit
+    watson
+    iosevka
+    tree
   ];
 
   fonts.fontconfig.enable = true;
-  programs.jq.enable = true;
-  programs.rofi = {
-    enable = true;
-    plugins = [ pkgs.rofi-calc ];
-    theme = ./home/rofi/nord.rasi;
-  };
+
+  # Programs
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
   };
-
   programs.git = {
     enable = true;
     userName = "Pascal Jungblut";
@@ -50,12 +45,21 @@
     };
     diff-so-fancy.enable = true;
   };
-
+  programs.jq.enable = true;
   programs.neovim = import ./home/neovim {
     inherit pkgs lib;
   };
-
+  programs.rofi = {
+    enable = true;
+    plugins = [ pkgs.rofi-calc ];
+    theme = ./home/rofi/nord.rasi;
+  };
   programs.zsh = import ./home/zsh {
     inherit config lib pkgs;
+  };
+
+  # dotfiles
+  home.file = import ./home/dotfiles {
+    inherit pkgs lib;
   };
 }
