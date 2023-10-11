@@ -38,6 +38,7 @@ in
 
   plugins = with pkgs.vimPlugins; [
     catppuccin-nvim
+    github-nvim-theme
     lualine-nvim
     minimap-vim
     nvim-autopairs
@@ -63,8 +64,6 @@ in
         r
       ]
     ))
-
-    github-nvim-theme
     configuration
   ];
 }

@@ -143,8 +143,8 @@ local on_attach = function(client, bufnr)
 -- Enable completion triggered by <c-x><c-o>
 vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-if client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
+    if client.server_capabilities.documentSymbolProvider then
+        navic.attach(client, bufnr)
     end
 
     -- Mappings.
@@ -210,7 +210,7 @@ if client.server_capabilities.documentSymbolProvider then
         },
     },
     })
-    require('lualine').setup {
+    require('lualine').setup({
         options = {
             theme = "catppuccin"
         },
@@ -229,6 +229,6 @@ if client.server_capabilities.documentSymbolProvider then
                         }
                 }
             },
-    }
+    })
     vim.cmd.colorscheme "catppuccin"
-    EOF
+EOF
