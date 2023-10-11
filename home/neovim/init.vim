@@ -140,8 +140,8 @@ local navic = require("nvim-navic")
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
--- Enable completion triggered by <c-x><c-o>
-vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     if client.server_capabilities.documentSymbolProvider then
         navic.attach(client, bufnr)
@@ -165,22 +165,22 @@ vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, bufopts)
-    end
+end
 
-    require("nvim-autopairs").setup {check_ts = true}
-    require'lspconfig'.clangd.setup{on_attach = on_attach}
-    require'lspconfig'.smarty_ls.setup{on_attach = on_attach}
-    require'nvim-treesitter.configs'.setup {
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-        },
-        incremental_selection = {
-            enable = true
-        },
-    }
+require("nvim-autopairs").setup {check_ts = true}
+require'lspconfig'.clangd.setup{on_attach = on_attach}
+require'lspconfig'.smarty_ls.setup{on_attach = on_attach}
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+    incremental_selection = {
+        enable = true
+    },
+}
     -- Colortheme
-    require("catppuccin").setup({
+require("catppuccin").setup({
     flavour = "mocha", -- latte, frappe, macchiato, mocha
     transparent_background = true, -- disables setting the background color.
     show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
