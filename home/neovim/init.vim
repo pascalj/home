@@ -136,6 +136,10 @@ vim.keymap.set('n', '<leader>k', '<Cmd>Telescope heading<CR>', bufopts)
 vim.keymap.set('n', '<leader>h', vim.cmd.ClangdSwitchSourceHeader, bufopts)
 
 local navic = require("nvim-navic")
+local goto_preview = require("goto-preview").setup {
+    -- g(p[dtiDr]|P)
+    default_mappings = true
+}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
