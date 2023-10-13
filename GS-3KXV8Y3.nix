@@ -15,5 +15,6 @@
     # cmakeCurses # fucks up OpenSSL
     lit
     jemalloc
+    playwright
   ];
 }
