@@ -63,6 +63,7 @@ in
         nix
         python
         r
+        typescript
       ]
     ))
     configuration
