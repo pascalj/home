@@ -31,7 +31,7 @@
     git = {
       enable = true;
       userName = "Pascal Jungblut";
-      userEmail = "mail@pascalj.de";
+      userEmail = lib.mkDefault "mail@pascalj.de";
       ignores = [ ".lvimrc" ];
       aliases = {
         st = "status";

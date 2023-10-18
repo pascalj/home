@@ -16,4 +16,6 @@
     playwright
     nodePackages.typescript-language-server
   ];
+
+  programs.git.userEmail = "pascal.jungblut@guardsquare.com";
 }
