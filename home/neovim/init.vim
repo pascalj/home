@@ -31,6 +31,8 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 map <C-b> gqip<cr>
+nnoremap <C-Left> gT
+nnoremap <C-Right> gt
 
 command! -bang GFilesExact call fzf#vim#gitfiles("",  {'options': ['--layout=reverse', '--info=inline']}, 0)
 
@@ -118,6 +120,10 @@ extensions = {
     },
 },
 })
+function createSplitWithHeader(bufopts)
+  vim.cmd('vsplit')
+  vim.cmd.ClangdSwitchSourceHeader(bufopts)
+end
 telescope.load_extension('heading')
 -- Finding
 vim.keymap.set('n', '<leader>ff', builtin.find_files, bufopts)
@@ -134,6 +140,7 @@ vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, bufopts)
 vim.keymap.set('n', '<leader>fS', builtin.lsp_dynamic_workspace_symbols, bufopts)
 vim.keymap.set('n', '<leader>k', '<Cmd>Telescope heading<CR>', bufopts)
 vim.keymap.set('n', '<leader>h', vim.cmd.ClangdSwitchSourceHeader, bufopts)
+vim.keymap.set('n', '<leader>H', createSplitWithHeader, bufopts)
 
 local navic = require("nvim-navic")
 local goto_preview = require("goto-preview").setup {
@@ -156,8 +163,6 @@ local on_attach = function(client, bufnr)
     local bufopts = { noremap=true, silent=true, buffer=bufnr }
     -- Finding/diagnostics
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', '<C-h>', vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set('n', 'gD', builtin.lsp_type_definitions, bufopts)
     vim.keymap.set('n', 'gd', builtin.lsp_definitions, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)

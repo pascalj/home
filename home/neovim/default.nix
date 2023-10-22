@@ -24,7 +24,7 @@ let
   configuration = pkgs.vimUtils.buildVimPlugin {
     pname = "configuration";
     version = "v1.0.0";
-    src = ../neovim;
+    src = ./.;
   };
 in
 {
